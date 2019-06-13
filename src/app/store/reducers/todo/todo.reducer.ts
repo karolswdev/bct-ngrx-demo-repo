@@ -12,41 +12,23 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
-export function reducer(
-  state = initialState,
-  action: TodoActions
-): State {
+export function reducer(state = initialState, action: TodoActions): State {
+
   switch (action.type) {
     case TodoActionTypes.AddTodo: {
       return adapter.addOne(action.payload.todo, state);
-    }
-
-    case TodoActionTypes.AddTodos: {
-      return adapter.addMany(action.payload.todos, state);
     }
 
     case TodoActionTypes.UpdateTodo: {
       return adapter.updateOne(action.payload.todo, state);
     }
 
-    case TodoActionTypes.UpdateTodos: {
-      return adapter.updateMany(action.payload.todos, state);
-    }
-
     case TodoActionTypes.DeleteTodo: {
       return adapter.removeOne(action.payload.id, state);
     }
 
-    case TodoActionTypes.DeleteTodos: {
-      return adapter.removeMany(action.payload.ids, state);
-    }
-
     case TodoActionTypes.LoadTodos: {
       return adapter.addAll(action.payload.todos, state);
-    }
-
-    case TodoActionTypes.ClearTodos: {
-      return adapter.removeAll(state);
     }
 
     default: {

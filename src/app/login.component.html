@@ -1,0 +1,16 @@
+<div>
+      <mat-card class="card" [ngClass]="{'flipped': flipped}">
+      <mat-card-header style="flex-direction: column;">
+        <div class="box">
+          <div class="title">Log in</div>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+      <div class="container">
+        <mat-form-field class="field" (keydown.enter)="loginUser(login)">
+          <input #login  matInput placeholder="Your name" class="todo-input">
+        </mat-form-field>
+      </div>
+      </mat-card-content>
+    </mat-card>
+</div>

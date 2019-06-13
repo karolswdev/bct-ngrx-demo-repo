@@ -1,8 +1,8 @@
-    <div>
+<div *ngIf="currentUser?.length">
       <mat-card class="card" [ngClass]="{'flipped': flipped}">
       <mat-card-header style="flex-direction: column;">
         <div class="box">
-          <div class="title" (click)="flipped=!flipped">ngrx-todo @ TerumoBCT</div>
+          <div class="title" (click)="flipped=!flipped">{{currentUser}} | ngrx-todo @ TerumoBCT | [{{mouseClicks}} clicks]</div>
         </div>
       </mat-card-header>
       <mat-card-content>
@@ -28,3 +28,4 @@
       </mat-list>
       </mat-card-content>
     </mat-card>
+</div>

@@ -1,18 +1,20 @@
 import { Component, NgModule, OnDestroy, ViewChildren } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import * as todoActions from './reducers/todo/todo.actions';
-import * as filterActions from './reducers/currentFilter/currentFilter.actions';
+import * as todoActions from './store/reducers/todo/todo.actions';
+import * as filterActions from './store/reducers/currentFilter/currentFilter.actions';
 import { select } from '@ngrx/store';
+import { Observable } from 'rxjs/observable';
 
 import {
   TodosState,
   reducers as rootReducer,
-} from './reducers';
+} from './store/reducers';
 
 import { map } from 'rxjs/operators';
-import { Todo } from './reducers/todo/todo.model';
-import * as todoEntity from './reducers/todo/todo.reducer';
+import { Todo } from './store/reducers/todo/todo.model';
+import * as todoEntity from './store/reducers/todo/todo.reducer';
+import * as mouseClickActions from './store/reducers/userInfo/mouseclick.actions';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +22,25 @@ import * as todoEntity from './reducers/todo/todo.reducer';
 })
 export class AppComponent {
 
+  currentUser: string;
+  mouseClicks: number;
   currentFilter: string;
-  todos: any;
+  todos: Observable<Todo[]>;
 
-  constructor(private _store: Store<TodosState>) {
-    this.todos = _store.pipe(select(t => t.todos),
+  constructor(private _todoStore: Store<TodosState>) {
+
+    this.todos = _todoStore.pipe(select(t => t.todos),
     map(todoEntity.selectAll));
-    _store.select(c => c.currentFilter).subscribe((filter: string) => {
+    _todoStore.select(c => c.currentFilter).subscribe((filter: string) => {
       this.currentFilter = filter;
+    });
+
+    _todoStore.select(s => s.mouseClicks).subscribe(m => {
+      this.mouseClicks = m;
+    });
+
+    _todoStore.select(u => u.currentUser).subscribe(u => {
+      this.currentUser = u;
     });
   }
 
@@ -40,9 +53,10 @@ export class AppComponent {
       id: null,
       text: input.value,
       completed: false,
-    }
+    };
 
-    this._store.dispatch(new todoActions.AddTodo({ todo }));
+    this._todoStore.dispatch(new todoActions.AddTodo({ todo }));
+    this._todoStore.dispatch(new mouseClickActions.ClickMouse());
     input.value = '';
   }
 
@@ -52,16 +66,19 @@ export class AppComponent {
       changes: {
         completed: !completed,
       },
-    }
-    this._store.dispatch(new todoActions.UpdateTodo({ todo }));
+    };
+
+    this._todoStore.dispatch(new todoActions.UpdateTodo({ todo }));
   }
 
   private removeTodo (id) {
-    this._store.dispatch(new todoActions.DeleteTodo({ id }));
+    this._todoStore.dispatch(new mouseClickActions.ClickMouse());
+    this._todoStore.dispatch(new todoActions.DeleteTodo({ id }));
   }
 
   private applyFilter (filter) {
-    this._store.dispatch(new filterActions.SetCurrentFilter({ filter }));
+    this._todoStore.dispatch(new mouseClickActions.ClickMouse());
+    this._todoStore.dispatch(new filterActions.SetCurrentFilter({ filter }));
   }
 
   private setFilter(event) {

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -12,10 +12,11 @@ import { VisibleTodosPipe } from './visibleTodosPipe';
 import { FlipComponent, FlipSection } from './flip.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LoaderComponent } from './loader.component';
+import { LoginComponent } from './login.component';
 
 @NgModule({
   declarations: [
-    AppComponent, VisibleTodosPipe, FlipComponent, FlipSection, LoaderComponent
+    AppComponent, VisibleTodosPipe, FlipComponent, FlipSection, LoaderComponent, LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +27,6 @@ import { LoaderComponent } from './loader.component';
     AppMaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, LoginComponent]
 })
 export class AppModule { }
