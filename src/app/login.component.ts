@@ -38,7 +38,6 @@ export class LoginComponent {
     console.dir(input.value);
 
     this._todoStore.dispatch(new userActions.CreateUser(input.value));
-    this._todoStore.dispatch(new mouseClickActions.ClickMouse());
 
     console.dir(this._todoStore);
 

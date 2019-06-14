@@ -29,14 +29,3 @@ export const reducers: ActionReducerMap<TodosState> = {
 
 export const metaReducers: MetaReducer<TodosState>[] = !environment.production ? [] : [];
 
-
-// before v5
-// export const getTodos = state$ => state$.select(s => s.todos); 
-// export const getCurrentFilter = state$ => state$.select('currentFilter'); 
-
-export const getTodos = state$ => console.dir(state$);
-
-//state$.select(s => s.todos);
-
-export const getCurrentFilter = state$ => console.dir(state$);
-// state$.select(s => s.currentFilter);
