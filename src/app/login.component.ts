@@ -32,6 +32,8 @@ export class LoginComponent {
   public loginUser(input) {
 
     if (input.value.length === 0) {
+      // reset the user
+      this._todoStore.dispatch(new userActions.DeleteUser());
       return;
     }
 
